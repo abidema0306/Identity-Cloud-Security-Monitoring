@@ -1,6 +1,7 @@
 # Identity & Cloud Security Monitoring
 # Threat Hunting | Microsoft Sentinel | KQL | Identity Governance
-# Project Overview
+🎯 # Project Overview
+
 This project explores how Microsoft Sentinel and Kusto Query Language (KQL) can be used to identify, investigate and monitor potentially suspicious identity and cloud infrastructure activities.
 
 The project combines security operations with identity governance principles to provide visibility into how identities interact with cloud resources.
@@ -26,7 +27,7 @@ The project combines security operations with identity governance principles to 
 | Public IP Creation               | Azure Activity | Monitor changes to cloud attack surface
 | Identity Activity                | Entra ID logs  | Investigate human and non-human identity activity
 
-# Investigation 01: Azure RBAC Role Assignments
+# 🧪 Investigation 01: Azure RBAC Role Assignments
 
 Objective: Identify Azure RBAC role assignment operations and investigate the initiating identity, target principal and assigned role.
 
