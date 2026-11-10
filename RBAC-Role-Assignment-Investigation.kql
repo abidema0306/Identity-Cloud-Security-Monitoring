@@ -6,13 +6,14 @@
 
 AzureActivity
 | where TimeGenerated > ago(48h)
+| where OperationNameValue =~ "MICROSOFT.AUTHORIZATION/ROLEASSIGNMENTS/WRITE"
 | extend RoleDetails = parse_json(tostring(Properties))
 | extend RequestBody = parse_json(tostring(RoleDetails.requestbody))
 | extend RoleDefinitionID = tostring(RequestBody.properties.roleDefinitionId)
 | extend PrincipalID = tostring(RequestBody.properties.principalId)
 | extend PrincipalType = tostring(RequestBody.properties.principalType)
-| where isnotempty(PrincipalID)
-| project TimeGenerated, Caller, CallerIpAddress, RoleDetails, RequestBody,
-          ActivityStatusValue, RoleDefinitionID,
+| project TimeGenerated, Caller, CallerIpAddress, OperationNameValue, RoleDetails, RequestBody,
+          ActivityStatusValue, ResourceId, RoleDefinitionID,
           PrincipalID, PrincipalType, Properties
 | order by TimeGenerated desc
+
