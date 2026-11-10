@@ -1,0 +1,18 @@
+// Project: Identity & Cloud Security Monitoring
+// Use Case: Detect Possible Privilege Escalation
+// Data Source: AzureActivity
+// Purpose: Identify Azure RBAC role assignment activity
+// Time Range: Last 48 hours
+
+AzureActivity
+| where TimeGenerated > ago(48h)
+| extend RoleDetails = parse_json(tostring(Properties))
+| extend RequestBody = parse_json(tostring(RoleDetails.requestbody))
+| extend RoleDefinitionID = tostring(RequestBody.properties.roleDefinitionId)
+| extend PrincipalID = tostring(RequestBody.properties.principalId)
+| extend PrincipalType = tostring(RequestBody.properties.principalType)
+| where isnotempty(PrincipalID)
+| project TimeGenerated, Caller, CallerIpAddress, RoleDetails, RequestBody,
+          ActivityStatusValue, RoleDefinitionID,
+          PrincipalID, PrincipalType, Properties
+| order by TimeGenerated desc
